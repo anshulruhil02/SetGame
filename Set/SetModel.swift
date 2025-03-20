@@ -8,23 +8,46 @@
 import Foundation
 import SwiftUI
 
-//struct Card {
-//    let shape: Shape
-//}
+struct CardGame {
+    var cards: [CardFeatures] = []
+    
+    init(numCards: Int, cardContent: (Int) -> CardFeatures) {
+        for i in 0..<numCards {
+            let card = cardContent(i)
+            cards.append(card)
+        }
+        print(cards)
+    }
+}
 
-enum Card {
+struct CardFeatures: Identifiable {
+    let id = UUID()
+    var numberOfShapes: Int
+    var color: Color
+    var shape: CardShape
+    var shading: CardShade
+}
+
+enum CardShade: CGFloat {
+    case opaque = 1
+    case translucent = 0.5
+    case transparent = 0
+}
+
+enum CardShape {
     case diamond
     case oval
     case squiggle
     
-    func shape() -> any Shape {
-           switch self {
-           case .diamond: return Diamond()
-           case .oval: return Oval()
-           case .squiggle: return Squiggle()
-           }
-       }
+    func shape() -> AnyShape {
+        switch self {
+        case .diamond: return AnyShape(Diamond())
+        case .oval: return AnyShape(Oval())
+        case .squiggle: return AnyShape(Squiggle())
+        }
+    }
 }
+
 
 struct Diamond: Shape {
     func path(in rect: CGRect) -> Path {

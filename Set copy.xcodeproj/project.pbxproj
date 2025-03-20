@@ -16,6 +16,7 @@
 		672B86D22D89F69700D531D4 /* SetUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 672B86D12D89F69700D531D4 /* SetUITestsLaunchTests.swift */; };
 		672B86DF2D89F8D700D531D4 /* SetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 672B86DE2D89F8D700D531D4 /* SetModel.swift */; };
 		672B86E12D89F8E400D531D4 /* SetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 672B86E02D89F8E400D531D4 /* SetViewModel.swift */; };
+		F376D5C22D8A9B7A00CEEFFF /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F376D5C12D8A9B7A00CEEFFF /* CardViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		672B86D12D89F69700D531D4 /* SetUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		672B86DE2D89F8D700D531D4 /* SetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetModel.swift; sourceTree = "<group>"; };
 		672B86E02D89F8E400D531D4 /* SetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetViewModel.swift; sourceTree = "<group>"; };
+		F376D5C12D8A9B7A00CEEFFF /* CardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 				672B86BA2D89F69600D531D4 /* Preview Content */,
 				672B86DE2D89F8D700D531D4 /* SetModel.swift */,
 				672B86E02D89F8E400D531D4 /* SetViewModel.swift */,
+				F376D5C12D8A9B7A00CEEFFF /* CardViewModel.swift */,
 			);
 			path = Set;
 			sourceTree = "<group>";
@@ -214,7 +217,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 672B86AB2D89F69400D531D4 /* Build configuration list for PBXProject "Set" */;
+			buildConfigurationList = 672B86AB2D89F69400D531D4 /* Build configuration list for PBXProject "Set copy" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -269,6 +272,7 @@
 				672B86E12D89F8E400D531D4 /* SetViewModel.swift in Sources */,
 				672B86DF2D89F8D700D531D4 /* SetModel.swift in Sources */,
 				672B86B42D89F69400D531D4 /* SetApp.swift in Sources */,
+				F376D5C22D8A9B7A00CEEFFF /* CardViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -582,7 +586,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		672B86AB2D89F69400D531D4 /* Build configuration list for PBXProject "Set" */ = {
+		672B86AB2D89F69400D531D4 /* Build configuration list for PBXProject "Set copy" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				672B86D32D89F69700D531D4 /* Debug */,
