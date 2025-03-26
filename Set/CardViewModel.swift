@@ -11,8 +11,8 @@ func createCardFeatures (index: Int) -> CardFeatures {
     return CardFeatures(
         numberOfShapes: 3,
         color: .blue,
-        shape: CardShape.diamond,
-        shading: CardShade.opaque)
+        shape: CardShape.squiggle,
+        shading: CardShade.translucent)
 }
 
 class CardViewModel: ObservableObject {

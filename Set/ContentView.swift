@@ -21,7 +21,7 @@ struct ContentView: View {
                     aspectRatio: 1/3
                 )
                 ScrollView {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: cardSize))]) {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: cardSize), spacing: 0)], spacing: 0){
                         ForEach(viewModel.cards) { card in
                             CardView(card: card, size: cardSize)
                                 .aspectRatio( 1/3, contentMode: .fit)
@@ -29,7 +29,6 @@ struct ContentView: View {
                     }
                 }
             }
-            
         }
     }
 }
@@ -42,19 +41,21 @@ func maxCardWidth(
     var columnCount = 1.0
     let count = CGFloat(count)
     repeat {
-        let width = size.width / CGFloat(columnCount)
+        print("iterating over column count; \(columnCount)")
+        let width = size.width / columnCount
         let height = width / aspectRatio
         let rowCount = (count / columnCount).rounded(.up)
         
         if rowCount * height < size.height {
-            print("Here")
-            return width.rounded(.down)
+            print("Here, rowcount is: \(rowCount),card height\(height), screen height: \(size.height)")
+            
+            return (size.width / columnCount).rounded(.down)
         }
         
         columnCount += 1
     } while columnCount < count
     
-    return min(size.width / count, (aspectRatio * size.height).rounded(.down))
+    return min(size.width / count, (aspectRatio * size.height).rounded())
 }
 
 struct CardView: View { 
@@ -66,15 +67,19 @@ struct CardView: View {
             base
                 .fill(.yellow)
                 .strokeBorder(.black)
-            GeometryReader { geometry in
                 VStack{
                     ForEach(0..<card.numberOfShapes) { _ in
                         Spacer()
-                        card.shape.shape()
-                            .fill(card.color)
+                            card.shape.shape()
+                                .stroke(.black, lineWidth: 2) // Add black border
+                                .background(
+                                    card.shape.shape()
+                                        .fill(card.color)
+                                        .opacity(card.shading.rawValue)
+                                )
+                                .padding()
                         Spacer()
                     }
-                }
                 
             }
         }
