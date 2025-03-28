@@ -10,31 +10,122 @@ import SwiftUI
 
 struct CardGame {
     var cards: [CardFeatures] = []
+    var selectedCards: [CardFeatures] = []
+    var setCount = 0
+    var createCards: (Int) -> CardFeatures
     
-    init(numCards: Int, cardContent: (Int) -> CardFeatures) {
+    init(numCards: Int, cardContent: @escaping (Int) -> CardFeatures) {
         for i in 0..<numCards {
             let card = cardContent(i)
             cards.append(card)
         }
+        createCards = cardContent
         print(cards)
+    }
+    
+    mutating func newGame() {
+        let cardsOnDeck = cards.count
+        cards = []
+        for i in 0..<cardsOnDeck {
+            let card = createCards(i)
+            cards.append(card)
+        }
+        setCount = 0
+    }
+    
+    mutating func choose(card: CardFeatures) {
+        guard let index = cards.firstIndex(of: card) else {
+            return
+        }
+        cards[index].isSelected.toggle()
+        if cards[index].isSelected {
+            selectedCards.append(cards[index])
+        } else {
+            if let selectedIndex = selectedCards.firstIndex(of: card) {
+                selectedCards.remove(at: selectedIndex)
+            }
+        }
+        
+        handeSelectedCards()
+    }
+    
+    mutating func handeSelectedCards() {
+        if selectedCards.count == 3 {
+            if checkSetLogic() {
+                setCount += 1
+            }
+            discard()
+            selectedCards = []
+        }
+    }
+    
+    mutating func discard() {
+        for i in (0..<selectedCards.count) {
+            guard let idx = cards.firstIndex(of: selectedCards[i]) else {
+                return
+            }
+            cards[idx].isSelected = false
+        }
+    }
+    
+    func checkSetLogic() -> Bool {
+        var numberCondition = false
+        var colorCondition = false
+        var shapeCondition = false
+        var shadingCondition = false
+        let card1 = selectedCards[0]
+        let card2 = selectedCards[1]
+        let card3 = selectedCards[2]
+        
+        let isSameNumber = (card1.numberOfShapes == card2.numberOfShapes) && (card2.numberOfShapes == card3.numberOfShapes)
+        let isSameColor = (card1.color == card2.color) && (card2.color == card3.color)
+        let isSameShape = (card1.shape == card2.shape) && (card2.shape == card3.shape)
+        let isSameShading = (card1.shading == card2.shading) && (card2.shading == card3.shading)
+        
+        let isDiffNumber = (card1.numberOfShapes != card2.numberOfShapes) && (card2.numberOfShapes != card3.numberOfShapes) && (card1.numberOfShapes != card2.numberOfShapes)
+        let isDiffColor = (card1.color != card2.color) && (card2.color != card3.color) && (card1.color != card2.color)
+        let isDiffShape = (card1.shape != card2.shape) && (card2.shape != card3.shape) && (card1.shape != card2.shape)
+        let isDiffShading = (card1.shading != card2.shading) && (card2.shading != card3.shading) && (card1.shading != card2.shading)
+        
+        numberCondition = isSameNumber || isDiffNumber
+        colorCondition = isSameColor || isDiffColor
+        shapeCondition = isSameShape || isDiffShape
+        shadingCondition = isSameShading || isDiffShading
+        
+        return numberCondition && colorCondition && shapeCondition && shadingCondition
     }
 }
 
-struct CardFeatures: Identifiable {
+struct CardFeatures: Identifiable, Equatable {
     let id = UUID()
-    var numberOfShapes: Int
-    var color: Color
-    var shape: CardShape
-    var shading: CardShade
+    var numberOfShapes: Int = 1
+    var color: CardColor = .green
+    var shape: CardShape = .diamond
+    var shading: CardShade = .opaque
+    var isSelected: Bool = false
 }
 
-enum CardShade: CGFloat {
+enum CardColor: CaseIterable {
+    case red
+    case green
+    case purple
+    
+    func color() -> Color {
+        switch self {
+        case .red: return .red
+        case .green: return .green
+        case .purple: return .purple
+        }
+    }
+}
+
+enum CardShade: CGFloat, CaseIterable {
     case opaque = 1
     case translucent = 0.5
     case transparent = 0
 }
 
-enum CardShape {
+enum CardShape: CaseIterable {
     case diamond
     case oval
     case squiggle
